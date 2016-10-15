@@ -16,18 +16,25 @@ Route::get('/', function () {
 });
 
 
-Route::get('/login', function () {
-    return view('pages.login');
-});
-
 Route::get('/register', [
-    'as' => 'auth.getRegister',
+    'as' => 'auth.register',
     'uses' => 'Auth\AuthController@getRegister'
 ]);
 
 
 Route::post('/register', [
-    'as' => 'auth.postRegister',
+    'as' => 'auth.register',
     'uses' => 'Auth\AuthController@postRegister'
+]);
+
+Route::get('/login', [
+    'as' => 'auth.login',
+    'uses' => 'Auth\AuthController@getLogin'
+]);
+
+
+Route::post('/login', [
+    'as' => 'auth.login',
+    'uses' => 'Auth\AuthController@postLogin'
 ]);
 
