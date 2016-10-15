@@ -10,6 +10,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 @show
 
 <body class="skin-blue sidebar-mini">
-
+    @include('layouts.partials.bodyHeader')
+    @section('body_container')
+    @show
+    @include('layouts.partials.bodyFooter')
 </body>
 </html>

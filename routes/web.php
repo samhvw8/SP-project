@@ -12,5 +12,9 @@
 */
 
 Route::get('/', function () {
-    return view('layouts.app');
+    return view('pages.home');
+});
+
+Route::get('/login', function () {
+    return view('pages.login');
 });
