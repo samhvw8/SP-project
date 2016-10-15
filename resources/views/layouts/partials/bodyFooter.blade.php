@@ -5,6 +5,7 @@
                 Copyright &copy; 2016 XYZ Wear. All rights reserved
             </div>
             <div class="clearfix"></div>
+            @stack('page_js')
         </div>
     </div>
 </div>
