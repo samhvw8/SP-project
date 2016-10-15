@@ -18,6 +18,9 @@ class AuthController extends Controller
      */
     public function getLogin()
     {
+        if (Auth::check()) {
+            return view('pages.home');
+        }
         return view('pages.login');
     }
 
@@ -33,7 +36,7 @@ class AuthController extends Controller
 
 
         // login
-        if (Auth::attempt(['email' => $email, 'password' => $password])) {
+        if (Auth::attempt(['email' => $email, 'password' => $password], true)) {
             // Authentication passed...
             return redirect()->intended('/');
         }
