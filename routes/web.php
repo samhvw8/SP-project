@@ -16,6 +16,17 @@ Route::get('/', function () {
 });
 
 
+Route::get('/dashboard', [
+    'as' => 'dashboard.index',
+    'uses' => 'DashboardController@index'
+]);
+
+Route::get('/dashboard/manage_users', [
+    'as' => 'dashboard.index',
+    'uses' => 'UsersController@index'
+]);
+
+
 Route::get('/register', [
     'as' => 'auth.register',
     'uses' => 'Auth\AuthController@getRegister'
