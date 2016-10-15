@@ -38,3 +38,11 @@ Route::post('/login', [
     'uses' => 'Auth\AuthController@postLogin'
 ]);
 
+Route::get('/manage_users', function () {
+    return view('pages.manageUsers');
+});
+
+Route::get('/dashboard', function () {
+    return view('pages.dashboard.index');
+});
+

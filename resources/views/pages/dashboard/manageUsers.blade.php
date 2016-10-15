@@ -1,4 +1,4 @@
-@extends('layouts.base_layout')
+@extends('pages.dashboard.index')
 
 @push('page_css')
     <link href="{{ asset('/css/manage-users.css') }}" rel="stylesheet" type="text/css"/>
@@ -8,7 +8,7 @@
     <script src="{{ asset('/js/manage-users.js') }}"></script>
 @endpush
 
-@section('body_container')
+@section('dashboard_container')
     <div class="manage-users-container">
         <div class="user-table">
             <div class="row no-margin">
