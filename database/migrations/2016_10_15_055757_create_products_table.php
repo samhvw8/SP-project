@@ -20,7 +20,7 @@ class CreateProductsTable extends Migration
             $table->integer('qty')->unsigned();
             $table->string('url')->nullable();
             $table->string('info')->nullable();
-            $table->string('sex')->nullable();
+            $table->boolean('sex');
             $table->string('size')->nullable();
             $table->string('key_word');
             $table->timestamps();
