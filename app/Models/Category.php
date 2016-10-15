@@ -4,13 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class Category extends Model
 {
     /**
      * The table used by the model.
      * @var string
      */
-    protected $table = 'orders';
-
-
+    protected $table = 'categories';
 }

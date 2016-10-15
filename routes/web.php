@@ -15,14 +15,26 @@ Route::get('/', function () {
     return view('pages.home');
 });
 
-Route::get('/login', function () {
-    return view('pages.login');
-});
 
-Route::get('/register', function () {
-    return view('pages.register');
-});
+Route::get('/register', [
+    'as' => 'auth.register',
+    'uses' => 'Auth\AuthController@getRegister'
+]);
 
-Route::get('/manage_users', function () {
-    return view('pages.manageUsers');
-});
+
+Route::post('/register', [
+    'as' => 'auth.register',
+    'uses' => 'Auth\AuthController@postRegister'
+]);
+
+Route::get('/login', [
+    'as' => 'auth.login',
+    'uses' => 'Auth\AuthController@getLogin'
+]);
+
+
+Route::post('/login', [
+    'as' => 'auth.login',
+    'uses' => 'Auth\AuthController@postLogin'
+]);
+
