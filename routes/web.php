@@ -15,10 +15,19 @@ Route::get('/', function () {
     return view('pages.home');
 });
 
+
 Route::get('/login', function () {
     return view('pages.login');
 });
 
-Route::get('/register', function () {
-    return view('pages.register');
-});
+Route::get('/register', [
+    'as' => 'auth.getRegister',
+    'uses' => 'Auth\AuthController@getRegister'
+]);
+
+
+Route::post('/register', [
+    'as' => 'auth.postRegister',
+    'uses' => 'Auth\AuthController@postRegister'
+]);
+
