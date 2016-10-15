@@ -4,6 +4,11 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 --*/
+
+.no-margin {
+    margin: 0px;
+}
+
 @font-face {
     font-family: 'Corben-Regular';
     src:url(../fonts/Corben-Regular.ttf) format('truetype');

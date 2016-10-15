@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.base_layout')
 
-@section('content')
+@section('body_container')
     <div>
         home page
     </div>
