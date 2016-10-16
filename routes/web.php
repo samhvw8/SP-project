@@ -21,8 +21,8 @@ Route::group(['middleware' => ['web']], function () {
 
 Route::group(['middleware' => 'admin'], function () {
     Route::get('/dashboard', [
-        'as' => 'dashboard.index',
-        'uses' => 'DashboardController@index'
+        'as' => 'pages.dashboard',
+        'uses' => 'PagesController@dashboard'
     ]);
 
     // show all users
@@ -45,6 +45,11 @@ Route::group(['middleware' => 'admin'], function () {
 
 });
 
+Route::get('/under_construction', [
+    'as' => 'pages.under_construction',
+    'uses' => 'PagesController@underContruction'
+]);
+
 Route::delete('/users/{id}', [
     'as' => 'users.destroy',
     'uses' => 'UsersController@destroy'
@@ -59,7 +64,6 @@ Route::get('/users/{id}/edit', [
     'as' => 'users.edit',
     'uses' => 'UsersController@edit'
 ]);
-
 
 Route::get('/register', [
     'as' => 'auth.register',

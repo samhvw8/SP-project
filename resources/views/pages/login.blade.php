@@ -27,7 +27,15 @@
                     <button class="login-button" type="submit">
                         Login
                     </button>
+
+
                 </div>
+                    <div class="row no-margin center-button-container">
+                        <a href="{{ route('auth.register') }}">or Create new account</a>
+
+
+                    </div>
+
             </div>
         </div>
     </form>

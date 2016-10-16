@@ -49,6 +49,9 @@ class AuthController extends Controller
         // login
         if (Auth::attempt(['email' => $email, 'password' => $password], true)) {
             // Authentication passed...
+            if(Auth::user()->isAdmin()) {
+                return redirect()->intended('dashboard');
+            }
             return redirect()->intended('/');
         }
 
@@ -89,8 +92,8 @@ class AuthController extends Controller
         }
 
         // create user
-        $this->createUser($data);
-
+        $user = $this->createUser($data);
+        Auth::login($user);
         // redirect
         return redirect('/');
     }

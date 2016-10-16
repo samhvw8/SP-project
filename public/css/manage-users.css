@@ -28,5 +28,7 @@
 }
 
 .add-new-user-button {
-    text-align: right;
+    width: 800px;
+    margin: 0px auto;
+    text-align: left;
 }

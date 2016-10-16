@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Helper;
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
@@ -16,7 +17,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(15);
+        $users = User::all();
         return view('pages.dashboard.users', ['users' => $users]);
     }
 
@@ -83,7 +84,11 @@ class UsersController extends Controller
         if (isset($user)) {
             // if user is found
             // return the view edit
-            return view('pages.dashboard.updateUser', ['user' => $user]);
+            if (Auth::user()->isAdmin())
+                return view('pages.dashboard.updateUser', ['user' => $user]);
+
+            if ($user == Auth::user())
+                return view('pages.profile', ['user' => $user]);
         }
 
         // $user not found
@@ -115,7 +120,6 @@ class UsersController extends Controller
             $request->session()->flash('errors', $errors);
             return redirect()->back()->withInput($request->except('password'));
         }
-
 
 
         // Edit user
@@ -156,11 +160,16 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
+
         // check $id exist
         $user = User::find($id);
 
-        if ($user !== null)
-            $user->delete();
+
+        if ($user !== null) {
+            if ($user == Auth::user() || Auth::user()->isAdmin())
+                $user->delete();
+        }
+
 
         //
         return redirect()->back();
