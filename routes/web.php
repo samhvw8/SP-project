@@ -15,17 +15,31 @@ Route::get('/', function () {
     return view('pages.home');
 });
 
+Route::group(['middleware' => ['web']], function () {
+    //
+});
 
-Route::get('/dashboard', [
-    'as' => 'dashboard.index',
-    'uses' => 'DashboardController@index'
+Route::group(['middleware' => 'admin'], function () {
+    Route::get('/dashboard', [
+        'as' => 'dashboard.index',
+        'uses' => 'DashboardController@index'
+    ]);
+
+    Route::get('/dashboard/manage_users', [
+        'as' => 'dashboard.index',
+        'uses' => 'UsersController@index'
+    ]);
+
+    Route::delete('/users/{id}', [
+        'as' => 'users.destroy',
+        'uses' => 'UsersController@destroy'
+    ]);
+});
+
+Route::get('/users/{id}/edit', [
+    'as' => 'users.edit',
+    'uses' => 'UsersController@edit'
 ]);
-
-Route::get('/dashboard/manage_users', [
-    'as' => 'dashboard.index',
-    'uses' => 'UsersController@index'
-]);
-
 
 Route::get('/register', [
     'as' => 'auth.register',
@@ -49,12 +63,3 @@ Route::post('/login', [
     'uses' => 'Auth\AuthController@postLogin'
 ]);
 
-Route::delete('/users/{id}', [
-    'as' => 'users.destroy',
-    'uses' => 'UsersController@destroy'
-]);
-
-Route::get('/users/{id}/edit', [
-    'as' => 'users.edit',
-    'uses' => 'UsersController@edit'
-]);
