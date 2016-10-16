@@ -41,6 +41,12 @@ Route::get('/users/{id}/edit', [
     'uses' => 'UsersController@edit'
 ]);
 
+Route::get('/logout', [
+    'as' => 'auth.logout',
+    'uses' => 'Auth\AuthController@getLogout'
+]);
+
+
 Route::get('/register', [
     'as' => 'auth.register',
     'uses' => 'Auth\AuthController@getRegister'

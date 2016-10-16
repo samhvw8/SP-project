@@ -11,6 +11,17 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
 
+    /**
+     *
+     */
+    public function getLogout()
+    {
+        if(Auth::check()) {
+            Auth::logout();
+        }
+
+        return redirect('/');
+    }
 
     /**
      * Show Login page
