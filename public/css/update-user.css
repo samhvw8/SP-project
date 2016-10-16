@@ -1,0 +1,12 @@
+.login-container {
+    width: 70%;
+}
+
+.cancel-button {
+    background-color: #cccccc;
+    color: black;
+}
+
+.center-button-container > button {
+    margin: 0px 10px;
+}

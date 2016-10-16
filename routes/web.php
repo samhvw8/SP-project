@@ -69,3 +69,7 @@ Route::post('/login', [
     'uses' => 'Auth\AuthController@postLogin'
 ]);
 
+
+Route::get('/update', function () {
+    return view('pages.dashboard.updateUser');
+});

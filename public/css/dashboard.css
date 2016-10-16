@@ -2,3 +2,8 @@
     padding-left: 130px;
     border-right: 1px solid #cccccc;
 }
+
+.dashboard-content {
+    width: 70%;
+    margin: 0px auto;
+}

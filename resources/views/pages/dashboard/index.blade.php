@@ -5,7 +5,7 @@
 @endpush
 
 @section('body_container')
-    <div class="row">
+    <div class="row dashboard-content">
         <div class="col-xs-3 left-menu">
             <ul>
                 <li>Users</li>
