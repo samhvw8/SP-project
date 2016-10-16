@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
+use App\Http\Helper;
 
 class UsersController extends Controller
 {
@@ -17,7 +17,7 @@ class UsersController extends Controller
     public function index()
     {
         $users = User::paginate(15);
-        return view('pages.dashboard.manageUsers', ['users' => $users]);
+        return view('pages.dashboard.users', ['users' => $users]);
     }
 
     /**
@@ -27,14 +27,16 @@ class UsersController extends Controller
      */
     public function create()
     {
-
+        return view('pages.dashboard.createUser');
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     *
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
     {
@@ -42,16 +44,32 @@ class UsersController extends Controller
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => $request->input('password'),
+            'password_confirmation' => $request->input('password_confirmation'),
             'is_admin' => $request->input('is_admin'),
         ];
 
+        // validate data
+        $errors = Helper::validatedData($data);
+        if (!empty($errors)) {
+            $request->session()->flash('errors', $errors);
+            return redirect()->back()->withInput($request->except('password'));
+        }
+
+        // create user
         $user = new User();
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->password = bcrypt($data['password']);
+        if ($data['is_admin'] === 'true')
+            $user->is_admin = true;
 
-        
+        // save user
+        $user->save();
 
-        // redirect
-        return redirect('/');
+        // redirect to 
+        return redirect('/dashboard/users');
     }
+
 
     /**
      * Display the specified resource.
@@ -72,7 +90,17 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        if (isset($user)) {
+            // if user is found
+            // return the view edit
+            return view('pages.dashboard.updateUser', ['user' => $user]);
+        }
+
+        // $user not found
+
+        abort(404, 'User id not found !');
+
     }
 
     /**
@@ -95,8 +123,13 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
+        // check $id exist
         $user = User::find($id);
-        $user->delete();
+
+        if ($user !== null)
+            $user->delete();
+
+        //
         return redirect()->back();
     }
 }

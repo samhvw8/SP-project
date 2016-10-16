@@ -6,17 +6,17 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-
+use App\Http\Helper;
 
 class AuthController extends Controller
 {
 
     /**
-     *
+     * Logout function
      */
     public function getLogout()
     {
-        if(Auth::check()) {
+        if (Auth::check()) {
             Auth::logout();
         }
 
@@ -82,7 +82,7 @@ class AuthController extends Controller
             'password_confirmation' => $request->input('password_confirmation')
         ];
 
-        $errors = $this->validatedData($data);
+        $errors = Helper::validatedData($data);
         if (!empty($errors)) {
             $request->session()->flash('errors', $errors);
             return redirect()->back()->withInput($request->except('password'));
@@ -93,29 +93,6 @@ class AuthController extends Controller
 
         // redirect
         return redirect('/');
-    }
-
-    /**
-     * Validate data return true if valid otherwise return false
-     * @param $data
-     * @return array
-     */
-    private function validatedData($data)
-    {
-        $errors = [];
-        // validate name
-        if (!$this->validatedName($data['name']))
-            array_push($errors, 'Name is not valid');
-
-        // validate email
-        if (!$this->validatedEmail($data['email']))
-            array_push($errors, 'Email is not valid');
-
-        // validate password
-        if (!$this->validatedPassword($data['password'], $data['password_confirmation']))
-            array_push($errors, 'Password confirmation does not match');
-
-        return $errors;
     }
 
     /**
@@ -132,70 +109,4 @@ class AuthController extends Controller
         ]);
     }
 
-    /**
-     * Validate password & password confirm are save return true if valid otherwise return false
-     * @param $password
-     * @param $confirm
-     * @return bool
-     */
-    private function validatedPassword($password, $confirm)
-    {
-        return $password == $confirm;
-    }
-
-
-    /**
-     * Validate name return true if valid otherwise return false
-     * @param $name
-     * @return bool
-     */
-    private function validatedName($name)
-    {
-        if (!preg_match("/^[a-zA-Z ]*$/", $name) || empty($name))
-            return false;
-
-        return true;
-    }
-
-    /**
-     * Validate email return true if valid otherwise return false
-     * @param $email
-     * @return bool
-     */
-    private function validatedEmail($email)
-    {
-        // validate email format
-
-        if (!$this->checkEmailFormat($email))
-            return false;
-
-        // check email exist
-        if ($this->checkEmailExist($email))
-            return false;
-
-
-        return true;
-    }
-
-    /**
-     * Check email format return true if valid otherwise return false
-     * @param $email
-     * @return boolean
-     */
-    private function checkEmailFormat($email)
-    {
-        return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
-    }
-
-
-    /**
-     * Check email exist return true if exist otherwise return false
-     * @param $email
-     * @return bool
-     */
-    public function checkEmailExist($email)
-    {
-        $user = User::where('email', $email)->first();
-        return $user !== null;
-    }
 }

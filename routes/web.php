@@ -25,25 +25,39 @@ Route::group(['middleware' => 'admin'], function () {
         'uses' => 'DashboardController@index'
     ]);
 
-    Route::get('/dashboard/manage_users', [
-        'as' => 'dashboard.index',
+    // show all users
+    Route::get('/dashboard/users', [
+        'as' => 'users.index',
         'uses' => 'UsersController@index'
     ]);
 
-    Route::delete('/users/{id}', [
-        'as' => 'users.destroy',
-        'uses' => 'UsersController@destroy'
+    // show form create new user
+    Route::get('/dashboard/users/create', [
+        'as' => 'users.create',
+        'uses' => 'UsersController@create'
     ]);
+
+    // create new user
+    Route::post('/dashboard/users', [
+        'as' => 'users.store',
+        'uses' => 'UsersController@store'
+    ]);
+
 });
+
+Route::delete('/users/{id}', [
+    'as' => 'users.destroy',
+    'uses' => 'UsersController@destroy'
+]);
+
+Route::put('/users/{id}', [
+    'as' => 'users.update',
+    'uses' => 'UsersController@update'
+]);
 
 Route::get('/users/{id}/edit', [
     'as' => 'users.edit',
     'uses' => 'UsersController@edit'
-]);
-
-Route::get('/logout', [
-    'as' => 'auth.logout',
-    'uses' => 'Auth\AuthController@getLogout'
 ]);
 
 
@@ -69,7 +83,7 @@ Route::post('/login', [
     'uses' => 'Auth\AuthController@postLogin'
 ]);
 
-
-Route::get('/update', function () {
-    return view('pages.dashboard.updateUser');
-});
+Route::get('/logout', [
+    'as' => 'auth.logout',
+    'uses' => 'Auth\AuthController@getLogout'
+]);

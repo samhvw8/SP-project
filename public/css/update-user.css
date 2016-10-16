@@ -10,3 +10,9 @@
 .center-button-container > button {
     margin: 0px 10px;
 }
+
+.error-message {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+}

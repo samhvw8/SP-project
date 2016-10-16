@@ -10,6 +10,14 @@
 
 @section('dashboard_container')
     <div class="manage-users-container">
+        <div class="add-new-user-button">
+            <a href="{{ route('users.create') }}">
+                <button class="login-button">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span>New User</span>
+                </button>
+            </a>
+        </div>
         <div class="user-table">
             <div class="row no-margin">
                 <table>

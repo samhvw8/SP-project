@@ -7,7 +7,7 @@
 }
 
 .manage-users-container {
-    margin: 0px 100px;
+
 }
 
 .table-header {
@@ -21,4 +21,12 @@
 .user-table {
     width: 800px;
     margin: 0px auto;
+}
+
+.add-new-user-button > button {
+    background-color: green;
+}
+
+.add-new-user-button {
+    text-align: right;
 }
