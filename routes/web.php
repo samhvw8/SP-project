@@ -49,11 +49,12 @@ Route::post('/login', [
     'uses' => 'Auth\AuthController@postLogin'
 ]);
 
-Route::get('/manage_users', function () {
-    return view('pages.manageUsers');
-});
+Route::delete('/users/{id}', [
+    'as' => 'users.destroy',
+    'uses' => 'UsersController@destroy'
+]);
 
-Route::get('/dashboard', function () {
-    return view('pages.dashboard.index');
-});
-
+Route::get('/users/{id}/edit', [
+    'as' => 'users.edit',
+    'uses' => 'UsersController@edit'
+]);
