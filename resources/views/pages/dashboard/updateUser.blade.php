@@ -31,11 +31,6 @@
                            value="{{  $user->name  }}">
                 </div>
                 <div class="row no-margin">
-                    <label class="col-xs-4" for="email">Email address:</label>
-                    <input class="col-xs-8" type="email" id="email" name="email"
-                           value="{{ $user->email }}">
-                </div>
-                <div class="row no-margin">
                     <label class="col-xs-4" for="password">New password:</label>
                     <input class="col-xs-8" type="password" id="password" name="password">
                 </div>

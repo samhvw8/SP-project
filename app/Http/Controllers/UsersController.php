@@ -66,21 +66,10 @@ class UsersController extends Controller
         // save user
         $user->save();
 
-        // redirect to 
+        // redirect to
         return redirect('/dashboard/users');
     }
 
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -99,7 +88,7 @@ class UsersController extends Controller
 
         // $user not found
 
-        abort(404, 'User id not found !');
+        return response()->view('errors.default', ['error' => 'User not found', 'status' => '404'], 404);
 
     }
 
@@ -112,7 +101,51 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = [
+            'name' => $request->input('name'),
+            'password' => $request->input('password'),
+            'password_confirmation' => $request->input('password_confirmation'),
+            'is_admin' => $request->input('is_admin'),
+        ];
+
+        // validate data
+        $errors = $this->validatedData($data);
+
+        if (!empty($errors)) {
+            $request->session()->flash('errors', $errors);
+            return redirect()->back()->withInput($request->except('password'));
+        }
+
+
+
+        // Edit user
+        // find user
+        $user = User::find($id);
+        // check user
+        $user->name = $data['name'];
+        $user->password = bcrypt($data['password']);
+        if ($data['is_admin'] === 'true')
+            $user->is_admin = true;
+
+        // save user
+        $user->save();
+
+        // redirect to
+        return redirect('/dashboard/users');
+    }
+
+    private function validatedData($data)
+    {
+        $errors = [];
+        // validate name
+        if (!Helper::validatedName($data['name']))
+            array_push($errors, 'Name is not valid');
+
+        // validate password
+        if (!Helper::validatedPassword($data['password'], $data['password_confirmation']))
+            array_push($errors, 'Password confirmation does not match');
+
+        return $errors;
     }
 
     /**
